@@ -2,14 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-import Redux from 'redux';
-import chatReducer from 'reducers/chat-reducer'
+import { createStore } from 'redux';
+import chatReducer from './reducers/chat-reducer';
 import { Provider } from 'react-redux';
 
 //Import Components
 import App from './components/app';
 
-const store = Redux.createStore(chatReducer);
+console.log(chatReducer);
+const store = createStore(chatReducer);
+
+store.subscribe(() => {
+  console.log(store.getState());
+});
 
 // ReactDOM.render(
 //   <App/>

@@ -28,7 +28,7 @@
         "react/jsx-no-duplicate-props": "error",
         "react/jsx-no-undef": "error",
         "react/no-multi-comp": "error",
-        "react/prop-types": "error",
+        "react/prop-types": "warn",
         "react/jsx-key": "error"
     }
 }

@@ -1,5 +1,5 @@
 //State Shape
 export const initialState  = {
-    username: null,
-    chatMessages: []
+    username: "dat boi",
+    chatMessages: [{username: "some nerd", body: "This is a message"}]
 }
