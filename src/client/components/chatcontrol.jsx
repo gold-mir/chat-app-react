@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { getChatInstance } from '../chat-helpers';
+
+import { formatChatMessage } from '../../shared/chatmessage';
 
 class ChatControl extends React.Component {
     constructor(props) {
@@ -10,18 +13,29 @@ class ChatControl extends React.Component {
     }
 
     sendMessage(){
-        let { dispatch } = this.props;
+        this.chat.sendMessage(formatChatMessage(this.props.username, `New message sent at ${new Date}`));
+    }
 
-        dispatch({
-            type: 'NEW_MESSAGE',
-            message: {username: this.props.username, body: `This is a message sent at ${new Date()}`}
+    componentDidMount(){
+        this.chat = getChatInstance();
+
+        this.chat.subscribe((message) => {
+            this.props.dispatch({
+                type: 'NEW_MESSAGE',
+                message: message
+            });
         });
+    }
+
+    componentWillUnmount(){
+        this.chat.destroy();
     }
 
     render(){
         return (
             <div>
-                {this.props.username}
+                Logged in as {this.props.username}
+                <hr/>
                 {this.props.messages.map((item, index) => {
                     return (
                     <div key={index}>

@@ -12,10 +12,6 @@ import App from './components/app';
 console.log(chatReducer);
 const store = createStore(chatReducer);
 
-store.subscribe(() => {
-  console.log(store.getState());
-});
-
 // ReactDOM.render(
 //   <App/>
 //   ,

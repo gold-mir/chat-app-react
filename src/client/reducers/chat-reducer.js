@@ -7,7 +7,6 @@ export default function chatReducer(state = initialState, action) {
             newState = Object.assign({}, state, {
                 chatMessages: state.chatMessages.concat([action.message])
             });
-            console.log(newState === state);
             return newState;
         default:
             return state;

@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
+const socketIO = require('socket.io');
 
 // Serve the static files from the React app
 const dist = path.join(__dirname, '../../dist');
@@ -22,6 +23,30 @@ app.get('*', (req,res) =>{
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port);
+let server = app.listen(port, () => {
+    console.log(`Server listening on port ${port}`)
+});
 
-console.log('App is listening on port ' + port);
+let io = socketIO.listen(server);
+
+io.on('connection', (socket) => {
+    console.log(`Socket ${socket.id} added.`);
+
+    socket.on('chatMessage', (data) => {
+        console.log(`Received new chat message`);
+        io.emit('chatMessage', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`Socket ${socket.id} removed`);
+    });
+
+});
+
+setInterval(() => {
+    io.emit('chatMessage', {
+        username: 'Server',
+        body: `New message sent at ${new Date()}`,
+        timestamp: Date.now()
+    });
+}, 10000);
