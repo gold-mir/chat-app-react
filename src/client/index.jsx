@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 //Import Components
 import App from './components/app';
 
-console.log(chatReducer);
 const store = createStore(chatReducer);
 
 // ReactDOM.render(

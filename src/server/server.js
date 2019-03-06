@@ -34,9 +34,9 @@ const io = socketIO.listen(server);
 io.on('connection', (socket) => {
   console.log(`Socket ${socket.id} added.`);
 
-  socket.on('chatMessage', (data) => {
+  socket.on('chat message', (data) => {
       console.log(`Received new chat message`);
-      io.emit('chatMessage', data);
+      io.emit('chat message', data);
   });
 
   socket.on('disconnect', () => {
@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
 });
 
 setInterval(() => {
-  io.emit('chatMessage', {
+  io.emit('chat message', {
       username: 'Server',
       body: `New message sent at ${new Date()}`,
       timestamp: Date.now()

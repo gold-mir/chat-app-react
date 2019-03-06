@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { getChatInstance } from '../chat-helpers';
+import { getChat } from '../chat/chat.module';
 
 import { formatChatMessage } from '../../shared/chatmessage';
 
 class ChatControl extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
         this.sendMessage = this.sendMessage.bind(this);
     }
 
@@ -17,18 +16,10 @@ class ChatControl extends React.Component {
     }
 
     componentDidMount(){
-        this.chat = getChatInstance();
-
-        this.chat.subscribe((message) => {
-            this.props.dispatch({
-                type: 'NEW_MESSAGE',
-                message: message
-            });
-        });
+        this.chat = getChat();
     }
 
     componentWillUnmount(){
-        this.chat.destroy();
     }
 
     render(){

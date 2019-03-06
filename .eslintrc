@@ -29,6 +29,7 @@
         "react/jsx-no-undef": "error",
         "react/no-multi-comp": "error",
         "react/prop-types": "warn",
-        "react/jsx-key": "error"
+        "react/jsx-key": "error",
+        "react/display-name": 0
     }
 }
