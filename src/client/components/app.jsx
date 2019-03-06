@@ -26,7 +26,6 @@ class App extends React.Component {
       <div>
         <h1>Chat App</h1>
         <ChatControl/>
-        <ChatControl/>
       </div>
     )
   }
