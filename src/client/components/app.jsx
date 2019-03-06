@@ -21,6 +21,10 @@ class App extends React.Component {
     });
   }
 
+  componentWillUnmount(){
+    this.chat.disconnect();
+  }
+
   render(){
     return (
       <div>

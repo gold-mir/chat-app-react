@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { getChat } from '../chat/chat.module';
+import PropTypes from 'prop-types';
 
 import { formatChatMessage } from '../../shared/chatmessage';
 
