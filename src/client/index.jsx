@@ -11,12 +11,6 @@ import App from './components/app';
 
 const store = createStore(chatReducer);
 
-// ReactDOM.render(
-//   <App/>
-//   ,
-//   document.getElementById('react-app-root')
-// );
-
 const render = (Component) => {
   ReactDOM.render(
     <BrowserRouter>

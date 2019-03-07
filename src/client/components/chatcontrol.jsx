@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { getChat } from '../chat/chat.module';
+import { getChat } from '../chat/chat-client';
 import PropTypes from 'prop-types';
 
 import { formatChatMessage } from '../../shared/chatmessage';
@@ -12,27 +12,28 @@ class ChatControl extends React.Component {
         this.sendMessage = this.sendMessage.bind(this);
     }
 
-    sendMessage(){
+    sendMessage() {
         this.chat.sendMessage(formatChatMessage(this.props.username, `New message sent at ${new Date}`));
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.chat = getChat();
+        this.chat.register(this.props.username);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
     }
 
-    render(){
+    render() {
         return (
             <div>
                 Logged in as {this.props.username}
-                <hr/>
+                <hr />
                 {this.props.messages.map((item, index) => {
                     return (
-                    <div key={index}>
-                        {item.username}: {item.body}
-                    </div>);
+                        <div key={index}>
+                            {item.username}: {item.body}
+                        </div>);
                 })}
                 <button onClick={this.sendMessage}>do not press</button>
             </div>);
@@ -40,7 +41,7 @@ class ChatControl extends React.Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         messages: state.chatMessages,
         username: state.username

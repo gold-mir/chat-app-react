@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import socketIO from 'socket.io';
+import Chat from './chat/chat.js';
 
 const publicFiles = path.join(__dirname, '/public');
 const app = express();
@@ -30,6 +31,7 @@ let server = app.listen(port, () => {
 });
 
 const io = socketIO.listen(server);
+// Chat.start(io);
 
 io.on('connection', (socket) => {
   console.log(`Socket ${socket.id} added.`);
