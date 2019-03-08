@@ -21,6 +21,7 @@ class Chat {
     });
 
     this.socket.on('reconnect', () => {
+      console.log('reconnecting');
       if(this.userData != null){
         this.register(this.userData);
       }
@@ -72,18 +73,21 @@ class Chat {
 
   setRegistered(value) {
     this.registered = value;
-    for(listener of this.stateListeners){
+    for(let listener of this.stateListeners){
       listener(this.registered);
     }
   }
 
   register(userData) {
-    this.socket.emit('register', userData, (response) => {
-      if(response){
-        this.userData = userData;
-        this.setRegistered(true);
-      }
-    });
+    if(userData != this.userData){
+      this.userData = userData;
+      this.socket.emit('register', userData, (response) => {
+        if(response){
+          this.userData = userData;
+          this.setRegistered(true);
+        }
+      });
+    }
   }
 }
 

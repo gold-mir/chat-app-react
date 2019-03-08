@@ -31,21 +31,7 @@ let server = app.listen(port, () => {
 });
 
 const io = socketIO.listen(server);
-// Chat.start(io);
-
-io.on('connection', (socket) => {
-  console.log(`Socket ${socket.id} added.`);
-
-  socket.on('chat message', (data) => {
-      console.log(`Received new chat message`);
-      io.emit('chat message', data);
-  });
-
-  socket.on('disconnect', () => {
-      console.log(`Socket ${socket.id} removed`);
-  });
-
-});
+Chat.setup(io);
 
 setInterval(() => {
   io.emit('chat message', {
