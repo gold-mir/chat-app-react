@@ -1,5 +1,6 @@
 import IO from 'socket.io-client';
 import React from 'react';
+import EVENT from '../../shared/chatEvents';
 
 const SERVER_LOCATION = "localhost:3000";
 
@@ -12,15 +13,15 @@ class Chat {
     this.registered = false;
     this.socket = IO(SERVER_LOCATION);
 
-    this.socket.on('connect', () => {
+    this.socket.on(EVENT.connect, () => {
       console.log(`Connected as ${this.socket.id}`);
     });
 
-    this.socket.on('disconnect', () => {
+    this.socket.on(EVENT.disconnect, () => {
       this.setRegistered(false);
     });
 
-    this.socket.on('reconnect', () => {
+    this.socket.on(EVENT.reconnect, () => {
       console.log('reconnecting');
       if(this.userData != null){
         this.register(this.userData);
@@ -39,22 +40,22 @@ class Chat {
   }
 
   sendMessage(message) {
-    this.socket.emit('chat message', message);
+    this.socket.emit(EVENT.message, message);
     return this;
   }
 
   joinRoom(roomID) {
-    this.socket.emit('join room', roomID);
+    this.socket.emit(EVENT.joinRoom, roomID);
     return this;
   }
 
   leaveRoom(roomID) {
-    this.socket.emit('leave room', roomID);
+    this.socket.emit(EVENT.leaveRoom, roomID);
     return this;
   }
 
   subscribeToMessages(callback) {
-    this.subscribeToEvent('chat message', callback);
+    this.subscribeToEvent(EVENT.message, callback);
   }
 
   subscribeToEvent(event, callback) {
@@ -81,7 +82,7 @@ class Chat {
   register(userData) {
     if(userData != this.userData){
       this.userData = userData;
-      this.socket.emit('register', userData, (response) => {
+      this.socket.emit(EVENT.register, userData, (response) => {
         if(response){
           this.userData = userData;
           this.setRegistered(true);

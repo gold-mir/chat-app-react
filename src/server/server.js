@@ -33,10 +33,12 @@ let server = app.listen(port, () => {
 const io = socketIO.listen(server);
 Chat.setup(io);
 
-setInterval(() => {
-  io.emit('chat message', {
-      username: 'Server',
-      body: `New message sent at ${new Date()}`,
-      timestamp: Date.now()
-  });
-}, 10000);
+// setInterval(() => {
+//   io.emit('chat message', {
+//       username: 'Server',
+//       body: `New message sent at ${new Date()}`,
+//       timestamp: Date.now()
+//   });
+// }, 10000);
+
+
