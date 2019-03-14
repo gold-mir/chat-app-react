@@ -31,7 +31,6 @@ class App extends React.Component {
       <div>
         <h1>Chat App</h1>
         <ChatControl room={"cats"}/>
-        <ChatControl room={"dogs"}/>
       </div>
     )
   }

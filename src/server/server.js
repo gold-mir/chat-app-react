@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import socketIO from 'socket.io';
-import Chat from './chat/chat.js';
+import Chat from './chat/chat.module.js';
 
 const publicFiles = path.join(__dirname, '/public');
 const app = express();
@@ -30,15 +30,5 @@ let server = app.listen(port, () => {
   console.log();
 });
 
-const io = socketIO.listen(server);
-Chat.setup(io);
-
-// setInterval(() => {
-//   io.emit('chat message', {
-//       username: 'Server',
-//       body: `New message sent at ${new Date()}`,
-//       timestamp: Date.now()
-//   });
-// }, 10000);
-
+Chat.setup(server);
 
