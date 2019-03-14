@@ -1,25 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 //import components
-import Test from './test';
 import ChatControl from './chatcontrol';
+import { getChat } from '../chat/chat-client';
 
+class App extends React.Component {
 
-function App(){
-  return (
-    <div>
-      <h1>Template</h1>
-      {/* <Switch>
-        <Route exact path="/" render={(props) => {
-          return (<h3>Hello World!</h3>)
-        }} />
-        <Route exact path="/test" component={Test}/>
-      </Switch> */}
-      <ChatControl/>
-    </div>
-  );
+  constructor(props){
+    super(props);
+    this.chat = getChat()
+    
+    this.chat.subscribeToMessages((message) => {
+      console.log('message');
+      this.props.dispatch({
+        type: "NEW_MESSAGE",
+        message: message
+      });
+    });
+  }
+
+  componentWillUnmount(){
+    this.chat.disconnect();
+  }
+
+  render(){
+    return (
+      <div>
+        <h1>Chat App</h1>
+        <ChatControl room={"cats"}/>
+      </div>
+    )
+  }
 }
 
-export default App;
+export default connect()(App);

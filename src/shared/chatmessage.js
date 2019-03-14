@@ -1,7 +1,8 @@
-export function formatChatMessage(username, body) {
+export function formatChatMessage(username, body, room) {
     return {
         username: username,
         body: body,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        room: room
     }
 }

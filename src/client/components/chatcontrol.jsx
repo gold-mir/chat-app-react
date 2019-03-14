@@ -1,46 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { getChatInstance } from '../chat-helpers';
+import { getChat } from '../chat/chat-client';
+import PropTypes from 'prop-types';
 
 import { formatChatMessage } from '../../shared/chatmessage';
 
 class ChatControl extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
         this.sendMessage = this.sendMessage.bind(this);
     }
 
-    sendMessage(){
+    sendMessage() {
         this.chat.sendMessage(formatChatMessage(this.props.username, `New message sent at ${new Date}`));
     }
 
-    componentDidMount(){
-        this.chat = getChatInstance();
-
-        this.chat.subscribe((message) => {
-            this.props.dispatch({
-                type: 'NEW_MESSAGE',
-                message: message
-            });
-        });
+    componentDidMount() {
+        this.chat = getChat();
+        this.chat.register(this.props.username);
     }
 
-    componentWillUnmount(){
-        this.chat.destroy();
+    componentWillUnmount() {
     }
 
-    render(){
+    render() {
         return (
             <div>
                 Logged in as {this.props.username}
-                <hr/>
+                <hr />
                 {this.props.messages.map((item, index) => {
                     return (
-                    <div key={index}>
-                        {item.username}: {item.body}
-                    </div>);
+                        <div key={index}>
+                            {item.username}: {item.body}
+                        </div>);
                 })}
                 <button onClick={this.sendMessage}>do not press</button>
             </div>);
@@ -48,7 +41,7 @@ class ChatControl extends React.Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         messages: state.chatMessages,
         username: state.username
